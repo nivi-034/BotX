@@ -1,0 +1,52 @@
+{* Display current user information *}
+{if $currentUser}
+	<div class="user-info" style="background: #f0f0f0; padding: 10px; margin: 10px 0; border: 1px solid #ccc;">
+		<h4>Current User Information</h4>
+		<p><strong>User ID:</strong> {$currentUser->getId()}</p>
+		<p><strong>Username:</strong> {$currentUser->getUsername()}</p>
+		<p><strong>Full Name:</strong> {$currentUser->getFullName()}</p>
+		<p><strong>Email:</strong> {$currentUser->getEmail()}</p>
+		<p><strong>Context ID:</strong> {$contextId|default:"Not available"}</p>
+		
+		{* Display user roles using $userRoles array *}
+		{if $userRoles}
+			<p><strong>User Roles:</strong></p>
+			<ul>
+				{foreach from=$userRoles item=roleId}
+					<li>
+						Role ID: {$roleId}
+						{* Map role IDs to role names using correct OJS constants *}
+						{if $roleId == 1}(Site Admin){/if}
+						{if $roleId == 16}(Journal Manager){/if}
+						{if $roleId == 17}(Sub Editor){/if}
+						{if $roleId == 4096}(Reviewer){/if}
+						{if $roleId == 4097}(Assistant){/if}
+						{if $roleId == 65536}(Author){/if}
+						{if $roleId == 1048576}(Reader){/if}
+						{if $roleId == 2097152}(Subscription Manager){/if}
+					</li>
+				{/foreach}
+			</ul>
+		{else}
+			<p><strong>User Roles:</strong> No roles assigned</p>
+		{/if}
+		
+		{* Check specific role permissions using correct OJS role constants *}
+		<p><strong>Role Permissions:</strong></p>
+		<ul>
+			<li>Is Site Admin: {if in_array(1, (array)$userRoles)}Yes{else}No{/if}</li>
+			<li>Is Manager: {if in_array(16, (array)$userRoles)}Yes{else}No{/if}</li>
+			<li>Is Sub Editor: {if in_array(17, (array)$userRoles)}Yes{else}No{/if}</li>
+			<li>Is Reviewer: {if in_array(4096, (array)$userRoles)}Yes{else}No{/if}</li>
+			<li>Is Assistant: {if in_array(4097, (array)$userRoles)}Yes{else}No{/if}</li>
+			<li>Is Author: {if in_array(65536, (array)$userRoles)}Yes{else}No{/if}</li>
+			<li>Is Reader: {if in_array(1048576, (array)$userRoles)}Yes{else}No{/if}</li>
+			<li>Is Subscription Manager: {if in_array(2097152, (array)$userRoles)}Yes{else}No{/if}</li>
+		</ul>
+	</div>
+{else}
+	<div class="user-info" style="background: #ffe6e6; padding: 10px; margin: 10px 0; border: 1px solid #ff9999;">
+		<h4>No User Logged In</h4>
+		<p>No current user information available.</p>
+	</div>
+{/if}
