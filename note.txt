@@ -1,0 +1,10 @@
+by  :)
+
+To run the project:
+1. Open two terminal
+2. In first terminal run: python manage.py runserver
+3. In second terminal run: 
+    - cd bot-frontend
+    - npm run dev
+
+i need a image galarry img ok thana. tyherila pakanum paru
